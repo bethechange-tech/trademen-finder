@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // or "mysql", "sqlite", etc.
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id           String        @id @default(uuid())
+  title        String
+  description  String
+  budget       Float
+  location     String
+  status       JobStatus     @default(OPEN)
+  applications Application[] // Relation to applications
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Application {
+  id             String            @id @default(uuid())
+  jobId          String
+  job            Job               @relation(fields: [jobId], references: [id])
+  applicantName  String
+  applicantEmail String
+  status         ApplicationStatus @default(PENDING) // Application status
+  message        String? // Optional message from the applicant
+  appliedAt      DateTime          @default(now())
+}
+
+enum JobStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
