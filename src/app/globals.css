@@ -2,20 +2,161 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer components {
+  .container {
+    @apply mx-auto max-w-6xl xl:max-w-7xl px-8;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24.6 95% 53.1%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 24.6 95% 53.1%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 20.5 90.2% 48.2%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 72.2% 50.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 20.5 90.2% 48.2%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.bg-cream {
+  background-color: #fdf5e6; /* Creamish color */
+}
+
+
+/* Custom styles for the date picker to resemble Airbnb's */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker {
+  font-family: Arial, sans-serif;
+}
+
+.react-datepicker__header {
+  background-color: white;
+  border-bottom: none;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  font-size: 16px;
+  font-weight: 500;
+  color: #484848;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  font-size: 14px;
+  color: #484848;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #ff5a5f;
+  color: white;
+}
+
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range {
+  background-color: #ffece6;
+  color: #484848;
+}
+
+.react-datepicker__day--in-range.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range.react-datepicker__day--selected {
+  background-color: #ff5a5f;
+  color: white;
+}
+
+.react-datepicker__close-icon::after {
+  background-color: #ff5a5f;
+  color: white;
+  border-radius: 50%;
+}
+
+.react-datepicker__input-container {
+  width: 100%;
+}
+
+.date-picker-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #484848;
+}
+
+
+/* styles/globals.css */
+@media (max-width: 640px) {
+  .rbc-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .rbc-toolbar .rbc-btn-group {
+    margin-bottom: 8px;
+  }
+
+  .rbc-event {
+    font-size: 0.75rem;
+  }
+}
+
+.map-loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255,255,255,0.7); /* slight transparency */
+  z-index: 9999;
 }

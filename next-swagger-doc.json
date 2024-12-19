@@ -1,0 +1,89 @@
+{
+  "apiFolder": "src/app/api",
+  "schemaFolders": ["models"],
+  "definition": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Next Swagger API Example",
+      "version": "1.0"
+    },
+    "components": {
+      "securitySchemes": {
+        "CookieAuth": {
+          "type": "apiKey",
+          "in": "cookie",
+          "name": "jwt",
+          "description": "Authentication token stored in cookies."
+        },
+        "BearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT",
+          "description": "JWT-based authentication using the Bearer token."
+        }
+      },
+      "schemas": {
+        "Job": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Unique identifier for the job",
+              "example": "job-id-123"
+            },
+            "title": {
+              "type": "string",
+              "description": "Title of the job",
+              "example": "Fix Leaky Faucet"
+            },
+            "description": {
+              "type": "string",
+              "description": "Detailed description of the job",
+              "example": "A plumber is needed to fix a faucet in the kitchen."
+            },
+            "budget": {
+              "type": "number",
+              "description": "Budget allocated for the job",
+              "example": 150
+            },
+            "location": {
+              "type": "string",
+              "description": "Location of the job",
+              "example": "London, UK"
+            },
+            "postcode": {
+              "type": "string",
+              "description": "Postcode of the job location",
+              "example": "NW1 6XE"
+            },
+            "status": {
+              "type": "string",
+              "description": "Status of the job",
+              "enum": ["OPEN", "IN_PROGRESS", "COMPLETED", "CANCELLED"],
+              "example": "OPEN"
+            },
+            "jobType": {
+              "type": "string",
+              "description": "Type of the job",
+              "enum": ["Plumbing", "Electrical", "Carpentry", "Painting", "Other"],
+              "example": "Plumbing"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Job creation timestamp",
+              "example": "2024-12-01T12:00:00Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Job update timestamp",
+              "example": "2024-12-05T15:00:00Z"
+            }
+          },
+          "required": ["title", "description", "budget", "location", "postcode", "status"]
+        }
+      }
+    }
+  }
+}

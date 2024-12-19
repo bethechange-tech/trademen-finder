@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: postgres-mtm
+    image: postgis/postgis:15-master
+    restart: always
+    ports:
+      - "5433:5432" # Host port 5433 maps to container port 5432
+    volumes:
+      - mtm_pgdata:/var/lib/postgresql/data # Named volume for PostgreSQL data
+      - ./docker/pg-init-scripts:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=POSTGRES_USER
+      - POSTGRES_PASSWORD=POSTGRES_PASSWORD
+      - POSTGRES_MULTIPLE_DATABASES=mtm
+
+volumes:
+  mtm_pgdata:

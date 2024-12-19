@@ -1,0 +1,1 @@
+export const hankoTokenKey = 'hanko-token';

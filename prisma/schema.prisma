@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Change this based on your database
+  url      = env("DATABASE_URI")
+}
+
+enum JobStatus {
+  OPEN
+  CLOSED
+  PENDING
+}
+
+model Job {
+  id           Int           @id @default(autoincrement())
+  title        String        @unique
+  description  String
+  categoryId   Int
+  category     Category      @relation(fields: [categoryId], references: [id])
+  price        Float
+  city         String
+  years        String
+  image        String
+  startDate    DateTime?
+  endDate      DateTime?
+  status       JobStatus     @default(OPEN)
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id])
+  applicants   User[]        @relation("JobApplicants")
+  shortList    User[]        @relation("JobShortList")
+  applications Application[]
+}
+
+model User {
+  id             Int           @id @default(autoincrement())
+  email          String        @unique
+  password       String?
+  authProviderId String?       @unique
+  isAdmin        Boolean       @default(false)
+  jobs           Job[]         @relation("JobApplicants")
+  shortLists     Job[]         @relation("JobShortList")
+  applications   Application[]
+  userProfile    UserProfile?
+  createdJobs    Job[]
+}
+
+model Application {
+  id              Int      @id @default(autoincrement())
+  jobId           Int
+  job             Job      @relation(fields: [jobId], references: [id])
+  applicantId     Int
+  applicant       User     @relation(fields: [applicantId], references: [id])
+  status          String   @default("pending")
+  applicationDate DateTime
+  stortList       Boolean  @default(false)
+  isPaid          Boolean  @default(false)
+  paymentAmount   Int?
+
+  @@unique([jobId, applicantId])
+  @@index([applicantId])
+}
+
+model UserProfile {
+  id                Int                @id @default(autoincrement())
+  firstName         String
+  lastName          String
+  fullName          String
+  email             String             @unique
+  phone             String
+  address           String
+  state             String
+  postalCode        String
+  city              String
+  country           String
+  jobTitle          String
+  userId            Int                @unique
+  user              User               @relation(fields: [userId], references: [id])
+  experience        String
+  education         String
+  skills            String
+  bio               String
+  profilePicture    String
+  experienceDetails ExperienceDetail[]
+}
+
+model ExperienceDetail {
+  id            Int         @id @default(autoincrement())
+  companyName   String
+  role          String
+  duration      String
+  location      String
+  initial       String
+  color         String
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id])
+  userProfileId Int
+}
+
+model Category {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+  imageUrl    String
+  Job         Job[]
+}
